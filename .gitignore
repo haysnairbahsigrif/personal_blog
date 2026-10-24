@@ -1,0 +1,31 @@
+# Database (tidak boleh masuk repo — berisi data user!)
+database/*.sqlite
+database/*.sqlite-shm
+database/*.sqlite-wal
+database/*.db
+
+# Upload gambar user
+uploads/*
+!uploads/.gitkeep
+
+# Config lokal (kalau nanti pakai .env)
+.env
+.env.local
+config/config.local.php
+
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Dependensi (kalau nanti pakai Composer)
+vendor/
+composer.lock
+
+# Log
+*.log
+
+# File sementara
+*.tmp
