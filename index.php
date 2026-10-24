@@ -4,6 +4,12 @@ declare(strict_types=1);
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/includes/functions.php';
 
+// Kalau belum ada admin, arahkan ke setup
+$hasAdmin = (bool) $pdo->query("SELECT COUNT(*) FROM admins")->fetchColumn();
+if (!$hasAdmin) {
+    redirect('setup.php');
+}
+
 $page   = max(1, (int) ($_GET['page'] ?? 1));
 $offset = ($page - 1) * POSTS_PER_PAGE;
 
