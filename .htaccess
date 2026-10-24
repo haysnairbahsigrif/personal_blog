@@ -1,0 +1,15 @@
+# Blokir akses langsung ke folder-folder sensitif
+RedirectMatch 403 ^/config/.*$
+RedirectMatch 403 ^/includes/.*$
+RedirectMatch 403 ^/database/.*$
+
+# Halaman default
+DirectoryIndex index.php
+
+# Charset default
+AddDefaultCharset UTF-8
+
+# Blokir akses file dotfiles
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
