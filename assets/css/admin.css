@@ -534,3 +534,42 @@
         font-size: 1.5rem;
     }
 }
+
+/* ---------- Editor (post-edit.php) ---------- */
+.editor-header {
+    margin-bottom: 1.5rem;
+}
+
+.editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.editor-main,
+.side-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.side-card+.side-card {
+    margin-top: 1rem;
+}
+
+.side-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+@media (max-width: 900px) {
+    .editor-grid {
+        grid-template-columns: 1fr;
+    }
+}

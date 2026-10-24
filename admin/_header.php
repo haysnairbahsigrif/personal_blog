@@ -36,6 +36,10 @@ if (!isset($adminTitle)) $adminTitle = 'Dashboard';
                     class="<?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">
                     <?= icon('dashboard') ?> <span>Dashboard</span>
                 </a>
+                <a href="<?= BASE_URL ?>/admin/post-edit.php"
+                    class="<?= basename($_SERVER['PHP_SELF']) === 'post-edit.php' ? 'active' : '' ?>">
+                    <?= icon('add') ?> <span>Tulis Baru</span>
+                </a>
                 <a href="<?= BASE_URL ?>/index.php" target="_blank" rel="noopener">
                     <?= icon('external-link') ?> <span>Lihat Situs</span>
                 </a>
