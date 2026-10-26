@@ -49,7 +49,7 @@ require __DIR__ . '/includes/header.php';
                     <a href="<?= BASE_URL ?>/post.php?slug=<?= urlencode($post['slug']) ?>" class="post-card-link">
                         <?php if (!empty($post['cover_image'])): ?>
                             <div class="post-card-img">
-                                <img src="<?= e($post['cover_image']) ?>" alt="<?= e($post['title']) ?>" loading="lazy">
+                                <img src="<?= e(getCoverUrl($post['cover_image'])) ?>" alt="<?= e($post['title']) ?>" loading="lazy">
                             </div>
                         <?php else: ?>
                             <div class="post-card-img post-card-placeholder" aria-hidden="true">

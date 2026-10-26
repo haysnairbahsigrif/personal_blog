@@ -56,7 +56,7 @@ require __DIR__ . '/includes/header.php';
 
     <?php if (!empty($post['cover_image'])): ?>
         <figure class="post-single-cover">
-            <img src="<?= e($post['cover_image']) ?>" alt="<?= e($post['title']) ?>">
+            <img src="<?= e(getCoverUrl($post['cover_image'])) ?>" alt="<?= e($post['title']) ?>">
         </figure>
     <?php endif; ?>
 

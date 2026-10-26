@@ -779,3 +779,57 @@
 [data-theme="dark"] .sidebar-avatar {
     color: #17161a;
 }
+
+/* ---------- Cover Upload & Preview ---------- */
+.cover-preview-wrap {
+    margin-bottom: 1rem;
+    padding: .75rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.cover-preview {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: .5rem;
+    display: block;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.remove-cover-label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .8rem;
+    color: #dc2626;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.remove-cover-label input {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .remove-cover-label {
+    color: #fca5a5;
+}
+
+.file-input {
+    padding: .5rem;
+    font-size: .85rem;
+    width: 100%;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    cursor: pointer;
+    transition: border-color var(--transition);
+}
+
+.file-input:hover {
+    border-color: var(--accent);
+}

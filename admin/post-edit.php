@@ -40,8 +40,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $excerpt = trim($_POST['excerpt'] ?? '');
         $content = trim($_POST['content'] ?? '');
         $cat     = trim($_POST['category'] ?? 'Umum');
-        $cover   = trim($_POST['cover_image'] ?? '');
         $status  = ($_POST['status'] ?? 'draft') === 'published' ? 'published' : 'draft';
+
+        // Default: pakai gambar lama (kalau mode edit)
+        $cover = $post['cover_image'];
+
+        // Proses upload gambar cover baru
+        if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === UPLOAD_ERR_OK) {
+            $file    = $_FILES['cover_image'];
+            $maxSize = 2 * 1024 * 1024;
+
+            if ($file['size'] > $maxSize) {
+                $errors[] = 'Ukuran gambar maksimal 2MB.';
+            } else {
+                $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+                $finfo   = finfo_open(FILEINFO_MIME_TYPE);
+                $mime    = finfo_file($finfo, $file['tmp_name']);
+                finfo_close($finfo);
+
+                if (!in_array($mime, $allowed, true)) {
+                    $errors[] = 'Format gambar tidak didukung. Gunakan JPG, PNG, WebP, atau GIF.';
+                } else {
+                    $ext      = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)) ?: 'jpg';
+                    $newName  = 'cover-' . time() . '-' . bin2hex(random_bytes(4)) . '.' . $ext;
+                    $destPath = __DIR__ . '/../uploads/' . $newName;
+
+                    if (move_uploaded_file($file['tmp_name'], $destPath)) {
+                        // Hapus gambar lama (jika lokal)
+                        if (!empty($post['cover_image']) && !str_starts_with($post['cover_image'], 'http')) {
+                            $oldPath = __DIR__ . '/../' . $post['cover_image'];
+                            if (file_exists($oldPath)) {
+                                unlink($oldPath);
+                            }
+                        }
+                        $cover = 'uploads/' . $newName;
+                    } else {
+                        $errors[] = 'Gagal mengunggah gambar. Pastikan folder uploads/ dapat ditulis (chmod 775).';
+                    }
+                }
+            }
+        } elseif (isset($_POST['remove_cover']) && $_POST['remove_cover'] === '1') {
+            // User centang "Hapus gambar ini"
+            if (!empty($post['cover_image']) && !str_starts_with($post['cover_image'], 'http')) {
+                $oldPath = __DIR__ . '/../' . $post['cover_image'];
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+            $cover = null;
+        }
 
         if ($title === '')   $errors[] = 'Judul wajib diisi.';
         if ($content === '') $errors[] = 'Konten wajib diisi.';
@@ -118,7 +165,7 @@ require __DIR__ . '/_header.php';
     </div>
 <?php endif; ?>
 
-<form method="post" class="editor-form">
+<form method="post" class="editor-form" enctype="multipart/form-data">
     <input type="hidden" name="csrf" value="<?= e(csrfToken()) ?>">
 
     <div class="editor-grid">
@@ -183,12 +230,24 @@ require __DIR__ . '/_header.php';
                         <?php endforeach; ?>
                     </datalist>
                 </div>
+
                 <div class="form-group">
-                    <label for="cover_image">URL Gambar Cover <small>(opsional)</small></label>
-                    <input type="url" id="cover_image" name="cover_image"
-                        value="<?= e($_POST['cover_image'] ?? $post['cover_image']) ?>"
-                        placeholder="https://…">
-                    <div class="char-count">Tempel URL gambar dari Unsplash, dsb.</div>
+                    <label for="cover_image">Gambar Cover <small>(opsional)</small></label>
+
+                    <?php if (!empty($post['cover_image'])): ?>
+                        <div class="cover-preview-wrap">
+                            <img src="<?= e(getCoverUrl($post['cover_image'])) ?>" alt="Cover" class="cover-preview">
+                            <label class="remove-cover-label">
+                                <input type="checkbox" name="remove_cover" value="1">
+                                <span>Hapus gambar ini</span>
+                            </label>
+                        </div>
+                    <?php endif; ?>
+
+                    <input type="file" id="cover_image" name="cover_image"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                        class="file-input">
+                    <div class="char-count">Max 2MB. Format: JPG, PNG, WebP, GIF.</div>
                 </div>
             </div>
         </aside>

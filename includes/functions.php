@@ -165,3 +165,18 @@ function icon(string $name, string $class = '', int $size = 0): string
 
     return $cache[$key] = $svg;
 }
+
+/**
+ * Mendapatkan URL lengkap untuk gambar cover.
+ * Mendukung URL eksternal (http/https) dan file lokal di folder uploads/.
+ */
+function getCoverUrl(?string $cover): string
+{
+    if (empty($cover)) {
+        return '';
+    }
+    if (str_starts_with($cover, 'http://') || str_starts_with($cover, 'https://')) {
+        return $cover;
+    }
+    return BASE_URL . '/' . ltrim($cover, '/');
+}
