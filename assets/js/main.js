@@ -12,7 +12,6 @@
     const menuToggle = document.getElementById('menuToggle');
     const siteNav = document.getElementById('siteNav');
     const searchToggle = document.getElementById('searchToggle');
-    const searchClose = document.getElementById('searchClose');
     const searchBar = document.getElementById('searchBar');
 
     /* ---------- Theme toggle ---------- */
@@ -45,7 +44,12 @@
         if (!searchBar) return;
         searchBar.hidden = false;
         const input = searchBar.querySelector('input');
-        if (input) setTimeout(() => input.focus(), 50);
+        if (input) {
+            setTimeout(() => {
+                input.focus();
+                input.select();
+            }, 50);
+        }
     }
 
     function closeSearch() {
@@ -53,9 +57,26 @@
         searchBar.hidden = true;
     }
 
-    if (searchToggle) searchToggle.addEventListener('click', openSearch);
-    if (searchClose) searchClose.addEventListener('click', closeSearch);
+    if (searchToggle) {
+        searchToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (searchBar.hidden) {
+                openSearch();
+            } else {
+                closeSearch();
+            }
+        });
+    }
 
+    // Tutup saat klik di luar
+    document.addEventListener('click', (e) => {
+        if (!searchBar || searchBar.hidden) return;
+        if (searchBar.contains(e.target)) return;
+        if (searchToggle.contains(e.target)) return;
+        closeSearch();
+    });
+
+    // Esc = tutup, Cmd/Ctrl+K = buka
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
             e.preventDefault();

@@ -1,5 +1,10 @@
 <?php
 if (!isset($adminTitle)) $adminTitle = 'Dashboard';
+
+// Menu aktif
+$current = basename($_SERVER['PHP_SELF']);
+$userName = $_SESSION['admin_name'] ?? 'Admin';
+$userInitial = mb_strtoupper(mb_substr($userName, 0, 1));
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -24,37 +29,70 @@ if (!isset($adminTitle)) $adminTitle = 'Dashboard';
 
 <body class="admin-body">
 
-    <header class="admin-header">
-        <div class="container admin-header-inner">
-            <a href="<?= BASE_URL ?>/admin/index.php" class="brand">
+    <div class="admin-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigasi admin">
+            <a href="<?= BASE_URL ?>/admin/index.php" class="sidebar-brand">
                 <span class="brand-mark">✒</span>
-                <span class="brand-text"><?= e(SITE_NAME) ?></span>
+                <span>
+                    <span class="sidebar-brand-name"><?= e(SITE_NAME) ?></span>
+                    <span class="sidebar-brand-badge">Admin</span>
+                </span>
             </a>
 
-            <nav class="admin-nav" aria-label="Navigasi admin">
+            <nav class="sidebar-nav">
                 <a href="<?= BASE_URL ?>/admin/index.php"
-                    class="<?= basename($_SERVER['PHP_SELF']) === 'index.php' ? 'active' : '' ?>">
+                    class="sidebar-link <?= $current === 'index.php' ? 'active' : '' ?>">
                     <?= icon('dashboard') ?> <span>Dashboard</span>
                 </a>
                 <a href="<?= BASE_URL ?>/admin/post-edit.php"
-                    class="<?= basename($_SERVER['PHP_SELF']) === 'post-edit.php' ? 'active' : '' ?>">
+                    class="sidebar-link <?= $current === 'post-edit.php' ? 'active' : '' ?>">
                     <?= icon('add') ?> <span>Tulis Baru</span>
                 </a>
-                <a href="<?= BASE_URL ?>/index.php" target="_blank" rel="noopener">
+
+                <div class="sidebar-divider"></div>
+
+                <a href="<?= BASE_URL ?>/index.php" target="_blank" rel="noopener" class="sidebar-link">
                     <?= icon('external-link') ?> <span>Lihat Situs</span>
                 </a>
-                <a href="<?= BASE_URL ?>/admin/logout.php" class="logout">
+
+                <div class="sidebar-divider"></div>
+
+                <a href="<?= BASE_URL ?>/admin/logout.php" class="sidebar-link sidebar-link-danger">
                     <?= icon('logout-box-r') ?> <span>Keluar</span>
                 </a>
             </nav>
-        </div>
-    </header>
 
-    <main class="admin-main">
-        <div class="container">
-            <?php if ($flash = getFlash()): ?>
-                <div class="alert alert-<?= e($flash['type']) ?>">
-                    <?= icon($flash['type'] === 'success' ? 'check' : 'error-warning') ?>
-                    <?= e($flash['message']) ?>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <span class="sidebar-avatar"><?= e($userInitial) ?></span>
+                    <span class="sidebar-user-info">
+                        <span class="sidebar-user-name"><?= e($userName) ?></span>
+                        <span class="sidebar-user-role">Admin</span>
+                    </span>
                 </div>
-            <?php endif; ?>
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+
+        <!-- ================= MAIN ================= -->
+        <div class="admin-content-wrap">
+
+            <!-- Top bar (mobile only) -->
+            <header class="admin-topbar">
+                <button class="icon-btn" id="sidebarToggle" aria-label="Buka menu" aria-expanded="false">
+                    <?= icon('menu') ?>
+                </button>
+                <span class="topbar-title"><?= e($adminTitle) ?></span>
+            </header>
+
+            <main class="admin-main">
+                <div class="container">
+                    <?php if ($flash = getFlash()): ?>
+                        <div class="alert alert-<?= e($flash['type']) ?>">
+                            <?= icon($flash['type'] === 'success' ? 'check' : 'error-warning') ?>
+                            <?= e($flash['message']) ?>
+                        </div>
+                    <?php endif; ?>

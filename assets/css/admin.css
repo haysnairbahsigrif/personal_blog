@@ -6,67 +6,6 @@
     min-height: 100vh;
 }
 
-/* ---------- Header ---------- */
-.admin-header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
-
-.admin-header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 0;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.admin-nav {
-    display: flex;
-    gap: .25rem;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.admin-nav a {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    padding: .55rem .85rem;
-    border-radius: 8px;
-    font-size: .9rem;
-    font-weight: 500;
-    color: var(--muted);
-    transition: all var(--transition);
-}
-
-.admin-nav a:hover {
-    background: var(--surface-2);
-    color: var(--text);
-}
-
-.admin-nav a.active {
-    background: var(--accent-soft);
-    color: var(--accent);
-}
-
-.admin-nav a.logout {
-    color: #dc2626;
-}
-
-.admin-nav a.logout:hover {
-    background: #fee2e2;
-    color: #b91c1c;
-}
-
-[data-theme="dark"] .admin-nav a.logout:hover {
-    background: #7f1d1d;
-    color: #fca5a5;
-}
-
 /* ---------- Main ---------- */
 .admin-main {
     padding: 2rem 0 4rem;
@@ -572,4 +511,271 @@
     .editor-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* =========================================================
+   Layout: Sidebar + Content
+   ========================================================= */
+.admin-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+}
+
+/* ---------- Sidebar ---------- */
+.admin-sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 40;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    padding: 1.25rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    transition: background var(--transition);
+}
+
+.sidebar-brand:hover {
+    background: var(--surface-2);
+}
+
+.sidebar-brand .brand-mark {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.sidebar-brand-name {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+}
+
+.sidebar-brand-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: .65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: .1rem .4rem;
+    border-radius: 4px;
+    margin-top: .15rem;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1rem .75rem;
+    display: flex;
+    flex-direction: column;
+    gap: .15rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .65rem .85rem;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: .9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.sidebar-link:hover {
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.sidebar-link.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.sidebar-link.active .icon {
+    color: var(--accent);
+}
+
+.sidebar-link-danger {
+    color: #dc2626;
+}
+
+.sidebar-link-danger:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+[data-theme="dark"] .sidebar-link-danger:hover {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: .5rem .5rem;
+}
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+}
+
+.sidebar-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .95rem;
+    flex-shrink: 0;
+}
+
+.sidebar-user-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.sidebar-user-name {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-user-role {
+    font-size: .7rem;
+    color: var(--muted);
+}
+
+/* ---------- Content ---------- */
+.admin-content-wrap {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.admin-topbar {
+    display: none;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+.topbar-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* ---------- Overlay mobile ---------- */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
+    z-index: 35;
+    animation: fadeIn .2s ease;
+}
+
+.sidebar-overlay[hidden] {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   Responsive — Sidebar jadi drawer
+   ========================================================= */
+@media (max-width: 768px) {
+    .admin-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 260px;
+        transform: translateX(-100%);
+        transition: transform .25s cubic-bezier(.4, 0, .2, 1);
+        z-index: 45;
+        box-shadow: none;
+    }
+
+    .admin-sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, .15);
+    }
+
+    .admin-topbar {
+        display: flex;
+    }
+
+    .admin-main {
+        padding: 1.25rem 0 3rem;
+    }
+
+    .admin-title {
+        font-size: 1.4rem;
+    }
+
+    .admin-subtitle {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Dark mode tweak untuk sidebar */
+[data-theme="dark"] .admin-sidebar {
+    background: var(--surface);
+    border-right-color: var(--border);
+}
+
+[data-theme="dark"] .sidebar-avatar {
+    color: #17161a;
 }

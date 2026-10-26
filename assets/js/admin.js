@@ -5,6 +5,46 @@
  * - Counter karakter excerpt
  * - Warning sebelum meninggalkan form dengan perubahan belum disimpan
  */
+
+/* ---------- Sidebar toggle (mobile) ---------- */
+const sidebar = document.getElementById('adminSidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+if (sidebar && sidebarToggle && sidebarOverlay) {
+    function openSidebar() {
+        sidebar.classList.add('open');
+        sidebarOverlay.hidden = false;
+        sidebarToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        sidebarOverlay.hidden = true;
+        sidebarToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+
+    sidebarToggle.addEventListener('click', openSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
+    // Tutup saat klik link menu (navigasi akan redirect anyway, tapi untuk safety)
+    sidebar.querySelectorAll('.sidebar-link').forEach((link) => {
+        link.addEventListener('click', () => {
+            // Biarkan navigasi default; tutup setelah delay kecil
+            setTimeout(closeSidebar, 50);
+        });
+    });
+
+    // Esc untuk tutup
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+}
+
 (function () {
     'use strict';
 

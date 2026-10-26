@@ -1,7 +1,9 @@
-    </div>
-    </main>
+            </div>
+            </main>
+            </div>
+            </div>
 
-    <script src="<?= BASE_URL ?>/assets/js/admin.js" defer></script>
-    </body>
+            <script src="<?= BASE_URL ?>/assets/js/admin.js" defer></script>
+            </body>
 
-    </html>
+            </html>

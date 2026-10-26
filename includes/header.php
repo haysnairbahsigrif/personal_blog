@@ -56,12 +56,9 @@ if (!isset($pageDescription)) $pageDescription = SITE_TAGLINE;
         <div class="search-bar" id="searchBar" hidden>
             <form action="<?= BASE_URL ?>/search.php" method="get" class="container search-form">
                 <?= icon('search') ?>
-                <input type="search" name="q" placeholder="Cari tulisan…"
+                <input type="search" name="q" placeholder="Cari judul atau isi tulisan…"
                     value="<?= e($_GET['q'] ?? '') ?>"
                     autocomplete="off" aria-label="Kata kunci pencarian">
-                <button type="button" class="icon-btn" id="searchClose" aria-label="Tutup pencarian">
-                    <?= icon('close') ?>
-                </button>
             </form>
         </div>
     </header>

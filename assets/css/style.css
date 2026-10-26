@@ -777,3 +777,21 @@ a:hover {
     width: 1.25em;
     height: 1.25em;
 }
+
+/* Styling tombol clear bawaan browser di input type="search" */
+.search-form input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1rem;
+    width: 1rem;
+    background: currentColor;
+    cursor: pointer;
+    /* Pakai mask untuk mengganti ikon × dengan versi kita */
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'><path d='M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95 1.414-1.414z'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'><path d='M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95 1.414-1.414z'/></svg>") no-repeat center / contain;
+    opacity: .6;
+    transition: opacity .2s;
+}
+
+.search-form input::-webkit-search-cancel-button:hover {
+    opacity: 1;
+}
